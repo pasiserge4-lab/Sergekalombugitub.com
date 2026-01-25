@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERGE TECH | Design, Vidéo & Stratégie Digitale</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIABLES CSS & RESET --- */
+        :root {
+            --color-primary: #FFD700; /* Jaune Or Luxe */
+            --color-secondary: #111111; /* Noir profond */
+            --color-dark-bg: #0a0a0a; /* Noir encore plus profond pour les sections */
+            --color-text-light: #ffffff;
+            --color-text-grey: #b3b3b3;
+            --font-main: 'Montserrat', sans-serif;
+            --container-width: 1200px;
+            --section-spacing: 100px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-secondary);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- TYPOGRAPHIE --- */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--color-primary);
+        }
+
+        h2.center-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        p {
+            color: var(--color-text-grey);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .highlight {
+            color: var(--color-primary);
+        }
+
+        /* --- UTILITAIRES & LAYOUT --- */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+        }
+
+        section {
+            padding: var(--section-spacing) 0;
+        }
+
+        .text-center { text-align: center; }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--color-primary);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--color-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--color-primary);
+            color: var(--color-secondary);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background-color: rgba(17, 17, 17, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--color-text-light);
+            text-decoration: none;
+        }
+        .logo span { color: var(--color-primary); }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li { margin-left: 30px; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--color-primary);
+        }
+
+        /* --- HERO SECTION (ACCUEIL) --- */
+        #hero {
+            height: 100vh;
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.9)), url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'); /* Image de fond corporate */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: var(--color-primary);
+        }
+
+        /* --- SECTION À PROPOS --- */
+        #about {
+            background-color: var(--color-dark-bg);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image img {
+            /* width: 100%; NOTE: Le style inline de votre balise img prendra le dessus, mais on garde les effets CSS */
+            border-radius: 5px;
+            border-bottom: 5px solid var(--color-primary);
+            filter: grayscale(30%);
+            transition: 0.5s;
+        }
+        
+        .about-image img:hover {
+            filter: grayscale(0%);
+        }
+
+        /* --- SECTION SERVICES (MÉTIERS) --- */
+        #services {
+            background-color: var(--color-secondary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--color-dark-bg);
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--color-text-light);
+        }
+
+        /* --- SECTION FORMATIONS (Appel à l'action) --- */
+        #formations {
+            background: linear-gradient(45deg, var(--color-dark-bg) 0%, rgba(255, 215, 0, 0.1) 100%);
+            text-align: center;
+        }
+
+        .formation-box {
+            background-color: rgba(255, 215, 0, 0.05);
+            padding: 50px;
+            border: 2px solid var(--color-primary);
+            display: inline-block;
+            max-width: 800px;
+        }
+
+        /* --- SECTION POURQUOI MOI (Contenu Corporate) --- */
+        #why-me {
+            background-color: var(--color-dark-bg);
+        }
+        
+        .reasons-grid {
+             display: grid;
+             grid-template-columns: repeat(2, 1fr);
+             gap: 40px;
+        }
+        .reason-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        .reason-icon {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #000000;
+            padding: 50px 0 20px;
+            text-align: center;
+            border-top: 3px solid var(--color-primary);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--color-text-light);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .footer-logo span { color: var(--color-primary); }
+
+        .footer-info p {
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: var(--color-text-grey);
+        }
+
+        /* --- RESPONSIVE (MOBILE) --- */
+        @media (max-width: 968px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            
+            .nav-links {
+                display: none; /* Simplification pour l'exemple : menu caché sur mobile. Dans un vrai projet, ajouter un menu burger JS */
+            }
+            
+            .about-grid, .services-grid, .reasons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1; /* L'image passe au-dessus du texte sur mobile */
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#hero" class="logo">SERGE<span>TECH</span></a>
+                <ul class="nav-links">
+                    <li><a href="#hero" class="active">Accueil</a></li>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#services">Expertises</a></li>
+                    <li><a href="#why-me">Approche</a></li>
+                    <li><a href="#formations">Formations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-subtitle">Expertise Digitale Haut de Gamme</p>
+                <h1>Sublimez Votre Image, <br> <span class="highlight">Dominez Votre Marché.</span></h1>
+                <p>Graphisme, montage vidéo, copywriting et stratégies digitales. Je transforme votre vision en résultats tangibles avec une approche premium et percutante.</p>
+                <a href="#services" class="btn">Découvrir mes services</a>
+                <a href="#formations" class="btn btn-outline" style="margin-left: 20px;">Mes Formations</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>À Propos de <span class="highlight">Serge Tech</span></h2>
+                    <p class="highlight" style="font-weight: 500;">Plus qu'un prestataire, un partenaire stratégique.</p>
+                    <p>Dans un univers numérique saturé, l'excellence n'est pas une option, c'est une nécessité. Je suis Serge, professionnel polyvalent passionné par l'art de communiquer visuellement et textuellement.</p>
+                    <p>Mon approche combine la rigueur du design graphique, le dynamisme du montage vidéo et la persuasion du copywriting. Mon objectif est simple : créer des actifs numériques qui ne se contentent pas d'être beaux, mais qui convertissent et construisent une autorité durable pour votre marque.</p>
+                    <br>
+                    <a href="#contact" class="btn btn-outline">Me contacter</a>
+                </div>
+                <div class="about-image">
+                    <img src="ma-photo.jpg" alt="AirBrush Serge Kalombu" style="max-width:100%; height:auto;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="text-center center-title">Mes domaines d'<span class="highlight">Expertise</span></h2>
+            <p class="text-center" style="max-width: 700px; margin: 0 auto 50px auto;">Des solutions sur mesure pour propulser votre communication vers de nouveaux sommets.</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3>Graphisme & Branding</h3>
+                    <p>Création d'identités visuelles fortes et mémorables. Logos, chartes graphiques et supports marketing qui reflètent le prestige de votre entreprise.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                    <h3>Montage Vidéo Publicitaire</h3>
+                    <p>Production de spots publicitaires dynamiques et captivants. Du storytelling au montage final, je crée des vidéos conçues pour l'engagement et la conversion.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3>Copywriting & Stratégie</h3>
+                    <p>L'art de convaincre par les mots. Rédaction de pages de vente, emails marketing et coaching en stratégie digitale pour maximiser votre ROI.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section idwhy-me">
+        <div class="container">
+            <h2 class="text-center center-title">L'Approche <span class="highlight">Serge Tech</span></h2>
+            <p class="text-center" style="margin-bottom: 60px;">Pourquoi choisir une approche haut de gamme pour votre business ?</p>
+
+            <div class="reasons-grid">
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fa-solid fa-gem"></i></div>
+                    <div class="reason-content">
+                        <h3>Qualité Premium Intransigeante</h3>
+                        <p>Chaque pixel, chaque mot et chaque seconde de vidéo est calibré pour l'excellence. Je ne livre pas tant que ce n'est pas parfait.</p>
+                    </div>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="reason-content">
+                        <h3>Orienté Résultats</h3>
+                        <p>Le beau ne suffit pas. Mes créations sont des outils stratégiques pensés pour atteindre vos objectifs commerciaux et marketing.</p>
+                    </div>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="reason-content">
+                        <h3>Réactivité & Professionnalisme</h3>
+                        <p>Communication fluide, respect des délais et processus de travail transparent. Votre temps est précieux.</p>
+                    </div>
+                </div>
+                <div class="reason-item">
+                    <div class="reason-icon"><i class="fa-solid fa-infinity"></i></div>
+                    <div class="reason-content">
+                        <h3>Vision Long Terme</h3>
+                        <p>Je ne crée pas juste pour l'instant, je construis les fondations de votre image de marque pour les années à venir.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formations">
+        <div class="container">
+            <div class="formation-box">
+                <h2>Passez au Niveau Supérieur : <span class="highlight">Mes Formations</span></h2>
+                <p>Vous souhaitez maîtriser les compétences qui font la différence aujourd'hui ? Découvrez mes programmes de formation exclusifs en design, copywriting et stratégie digitale.</p>
+                <p>Acquérez l'expertise nécessaire pour devenir autonome et dominer votre secteur.</p>
+                <br>
+                <a href="https://ermaofrd.mychariow.shop" target="_blank" class="btn">Accéder au catalogue de formations</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <a href="#hero" class="footer-logo">SERGE<span>TECH</span></a>
+            <div class="footer-info">
+                <p>Graphiste Designer | Monteur Vidéo | Coach Copywriting & Stratégie</p>
+                <p>Email : contact@sergetech.com (Exemple)</p>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <a href="#" style="color: var(--color-primary); margin: 0 10px; font-size: 1.2rem;"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" style="color: var(--color-primary); margin: 0 10px; font-size: 1.2rem;"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" style="color: var(--color-primary); margin: 0 10px; font-size: 1.2rem;"><i class="fa-brands fa-behance"></i></a>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 SERGE TECH. Tous droits réservés. Site professionnel haut de gamme.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
