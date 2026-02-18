@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash System 365 Jours – Vis de ta passion</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0A1628;
+    --blue-mid: #0D2959;
+    --blue-bright: #1A5CFF;
+    --blue-light: #4D8CFF;
+    --yellow: #FFD100;
+    --yellow-soft: #FFE566;
+    --white: #FFFFFF;
+    --white-80: rgba(255,255,255,0.08);
+    --white-text: #E8F0FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--blue);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  section { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+    background: radial-gradient(ellipse 80% 70% at 50% -10%, #1A5CFF33 0%, transparent 70%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, #FFD10011 0%, transparent 60%),
+                var(--blue);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--blue));
+    z-index: 2;
+  }
+
+  /* Animated circles */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float 8s ease-in-out infinite;
+  }
+  .orb-1 { width: 500px; height: 500px; background: #1A5CFF22; top: -100px; left: -100px; animation-delay: 0s; }
+  .orb-2 { width: 400px; height: 400px; background: #FFD10015; bottom: 0; right: -80px; animation-delay: -3s; }
+  .orb-3 { width: 300px; height: 300px; background: #1A5CFF18; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: -5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #FFD100, #FF9D00);
+    color: #0A1628;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .hero-title {
+    font-size: clamp(42px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.9s ease 0.2s both;
+  }
+
+  .hero-title .highlight {
+    background: linear-gradient(135deg, #FFD100, #FF9D00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title .blue-text {
+    color: var(--blue-light);
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--white-text);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto 48px;
+    animation: fadeUp 0.9s ease 0.4s both;
+  }
+
+  .hero-cta-wrap {
+    animation: fadeUp 0.9s ease 0.6s both;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .btn-main {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFD100, #FF9D00);
+    color: #0A1628;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 20px 52px;
+    border-radius: 100px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    box-shadow: 0 0 60px #FFD10055, 0 20px 40px #0005;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #FFE566, #FFD100);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-main:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 80px #FFD10077, 0 30px 60px #0007; }
+  .btn-main:hover::before { opacity: 1; }
+  .btn-main span { position: relative; z-index: 1; }
+
+  .price-tag {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .price-old {
+    font-size: 18px;
+    font-weight: 600;
+    color: #8899BB;
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--yellow);
+  }
+
+  .urgency {
+    font-size: 13px;
+    color: #FF6B6B;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── PROBLEM SECTION ─── */
+  .problem {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, var(--blue) 0%, #081020 100%);
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-sub {
+    font-size: 18px;
+    color: var(--white-text);
+    max-width: 600px;
+    margin: 0 auto 60px;
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .pain-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 32px 28px;
+    text-align: left;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .pain-card:hover { border-color: #FFD10033; transform: translateY(-4px); }
+
+  .pain-icon { font-size: 36px; margin-bottom: 16px; }
+  .pain-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #fff; }
+  .pain-card p { font-size: 14px; color: #8899BB; line-height: 1.6; }
+
+  /* ─── SOLUTION / PRODUCT ─── */
+  .solution {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, #081020 0%, #0A1628 100%);
+    text-align: center;
+    position: relative;
+  }
+
+  .product-box {
+    max-width: 850px;
+    margin: 60px auto 0;
+    background: linear-gradient(135deg, #0D2959, #071535);
+    border: 1px solid rgba(26,92,255,0.3);
+    border-radius: 32px;
+    padding: 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #FFD100, #1A5CFF, #FFD100, transparent);
+  }
+
+  .product-title-big {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+
+  .product-title-big .y { color: var(--yellow); }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 48px;
+    text-align: left;
+  }
+
+  .module-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s;
+  }
+
+  .module-item:hover { background: rgba(26,92,255,0.1); border-color: rgba(26,92,255,0.3); }
+
+  .module-num {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: linear-gradient(135deg, #1A5CFF, #0D2959);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .module-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .module-info p { font-size: 12px; color: #8899BB; line-height: 1.5; }
+
+  /* ─── WHO IS THIS FOR ─── */
+  .for-who {
+    padding: 100px 24px;
+    background: var(--blue);
+    text-align: center;
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 60px auto 0;
+  }
+
+  .who-card {
+    background: linear-gradient(135deg, rgba(26,92,255,0.12), rgba(13,41,89,0.5));
+    border: 1px solid rgba(26,92,255,0.2);
+    border-radius: 20px;
+    padding: 36px 24px;
+    transition: all 0.3s;
+  }
+
+  .who-card:hover { transform: translateY(-6px); border-color: var(--yellow); box-shadow: 0 20px 60px #0009; }
+  .who-icon { font-size: 48px; margin-bottom: 16px; }
+  .who-card h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .who-card p { font-size: 13px; color: #8899BB; line-height: 1.5; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials {
+    padding: 100px 24px;
+    background: linear-gradient(180deg, #0A1628, #081020);
+    text-align: center;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 960px;
+    margin: 60px auto 0;
+  }
+
+  .testi-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 36px 28px;
+    text-align: left;
+    position: relative;
+  }
+
+  .testi-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px; right: 28px;
+    font-size: 80px;
+    line-height: 1;
+    color: #FFD10022;
+    font-weight: 900;
+  }
+
+  .stars { color: #FFD100; font-size: 18px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testi-text { font-size: 15px; line-height: 1.7; color: #C8D8F0; margin-bottom: 20px; }
+  .testi-author { font-size: 13px; font-weight: 700; color: #fff; }
+  .testi-role { font-size: 12px; color: #8899BB; }
+
+  /* ─── GUARANTEE ─── */
+  .guarantee {
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .guarantee-box {
+    max-width: 680px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(255,209,0,0.08), rgba(26,92,255,0.08));
+    border: 2px solid rgba(255,209,0,0.3);
+    border-radius: 28px;
+    padding: 56px 40px;
+    position: relative;
+  }
+
+  .guarantee-icon { font-size: 72px; margin-bottom: 24px; display: block; }
+  .guarantee-box h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; }
+  .guarantee-box p { font-size: 16px; color: #C8D8F0; line-height: 1.7; }
+
+  /* ─── FINAL CTA ─── */
+  .final-cta {
+    padding: 120px 24px;
+    background: linear-gradient(180deg, #081020 0%, #0A1628 50%, var(--blue-mid) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FFD10015, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .final-price-block {
+    margin: 40px auto;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .old-price {
+    font-size: 20px;
+    color: #8899BB;
+    text-decoration: line-through;
+    font-weight: 600;
+  }
+
+  .new-price {
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--yellow);
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .currency { font-size: 32px; vertical-align: super; }
+  .promo-label {
+    background: #FF3B3B;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+  }
+
+  .btn-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-main-big {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFD100, #FF9D00);
+    color: #0A1628;
+    font-family: 'Sora', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    padding: 24px 64px;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 0 80px #FFD10066, 0 20px 60px #0008;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-main-big:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 0 120px #FFD100AA, 0 30px 80px #000A; }
+
+  .secure-badges {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #8899BB;
+    font-weight: 600;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+    color: #4466AA;
+  }
+
+  /* ─── STICKY BAR ─── */
+  .sticky-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,22,40,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,209,0,0.2);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    z-index: 1000;
+    flex-wrap: wrap;
+  }
+
+  .sticky-bar span { font-size: 14px; font-weight: 700; color: #fff; }
+  .sticky-bar .price-mini { color: var(--yellow); }
+
+  .btn-sticky {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFD100, #FF9D00);
+    color: #0A1628;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    padding: 12px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  .btn-sticky:hover { transform: scale(1.04); }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .product-box { padding: 40px 24px; }
+    .guarantee-box { padding: 40px 24px; }
+    .new-price { font-size: 52px; }
+    .sticky-bar { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <span>🔥 <span class="price-mini">Cash System 365</span> — Offre limitée</span>
+  <span style="color:#8899BB;font-size:13px;text-decoration:line-through">30.000 FC</span>
+  <span class="price-mini" style="font-size:18px;font-weight:900">10.000 FC</span>
+  <a href="https://sergekalombuskn.mychariow.shop/prd_59etlu/checkout" class="btn-sticky">Je veux accéder →</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="badge">🚀 Formation #1 en Création de Contenu</div>
+
+  <h1 class="hero-title">
+    Transforme ta passion<br>en une <span class="highlight">machine à cash</span><br>
+    <span class="blue-text">en 365 jours</span>
+  </h1>
+
+  <p class="hero-sub">
+    Découvre le système complet qui a permis à des centaines de créateurs de contenu ordinaires 
+    de vivre pleinement de leur passion — même en partant de zéro.
+  </p>
+
+  <div class="hero-cta-wrap">
+    <div class="price-tag">
+      <span class="price-old">30.000 FC</span>
+      <span class="price-new">10.000 FC</span>
+      <span class="promo-label">−67%</span>
+    </div>
+    <a href="https://sergekalombuskn.mychariow.shop/prd_59etlu/checkout" class="btn-main">
+      <span>✅ Je veux le Cash System 365 →</span>
+    </a>
+    <p class="urgency">⚡ Offre promotionnelle — Disponible pour une durée limitée</p>
+  </div>
+</section>
+
+<!-- ═══════════ PROBLÈME ═══════════ -->
+<section class="problem">
+  <p class="section-label reveal">Le problème</p>
+  <h2 class="section-title reveal">Tu crées du contenu mais rien ne se passe ?</h2>
+  <p class="section-sub reveal">
+    Tu postes, tu travailles, tu t'investis… mais tes revenus ne suivent pas. 
+    Tu n'es pas seul(e). Voici pourquoi la plupart des créateurs échouent :
+  </p>
+
+  <div class="pain-grid">
+    <div class="pain-card reveal">
+      <div class="pain-icon">😩</div>
+      <h3>Zéro stratégie claire</h3>
+      <p>Tu publies sans plan défini et tu ne sais pas quoi créer pour attirer ton audience idéale.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">💸</div>
+      <h3>Pas de revenus stables</h3>
+      <p>Tu ne sais pas comment monétiser ton contenu de manière cohérente et durable.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">👁️</div>
+      <h3>Peu de visibilité</h3>
+      <p>Ton contenu existe mais personne ne le voit. Tu manques d'algorithme, de SEO et d'impact.</p>
+    </div>
+    <div class="pain-card reveal">
+      <div class="pain-icon">🤯</div>
+      <h3>Seul dans l'inconnu</h3>
+      <p>Personne pour te guider, trop d'infos contradictoires en ligne, tu ne sais plus où donner de la tête.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SOLUTION ═══════════ -->
+<section class="solution">
+  <p class="section-label reveal">La solution</p>
+  <h2 class="section-title reveal">Tout ce qu'il te faut en <span style="color:var(--yellow)">un seul système</span></h2>
+  <p class="section-sub reveal">
+    Cash System 365 Jours est la formation complète qui te donne TOUT : 
+    la stratégie, les outils, le mindset et le plan d'action concret pour vivre de ta création de contenu.
+  </p>
+
+  <div class="product-box reveal">
+    <div class="product-title-big">CASH SYSTEM <span class="y">365</span> JOURS</div>
+    <p style="color:#8899BB;font-size:16px;margin-top:8px;margin-bottom:4px">Le système complet pour créateurs ambitieux</p>
+
+    <div class="modules-grid">
+      <div class="module-item">
+        <div class="module-num">01</div>
+        <div class="module-info">
+          <h4>Découvre ton identité de créateur</h4>
+          <p>Trouve ta niche, ta voix unique et positionne-toi pour dominer ton secteur.</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-num">02</div>
+        <div class="module-info">
+          <h4>Stratégie de contenu 365 jours</h4>
+          <p>Un plan éditorial béton pour ne plus jamais manquer d'idées et publier avec cohérence.</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-num">03</div>
+        <div class="module-info">
+          <h4>Maîtrise l'algorithme</h4>
+          <p>Les secrets des plateformes pour être vu par des milliers de personnes chaque semaine.</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-num">04</div>
+        <div class="module-info">
+          <h4>Monétisation avancée</h4>
+          <p>5 méthodes prouvées pour transformer tes abonnés en revenus réels et récurrents.</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-num">05</div>
+        <div class="module-info">
+          <h4>Personal branding premium</h4>
+          <p>Construis une image de marque puissante qui attire des collaborations et des clients.</p>
+        </div>
+      </div>
+      <div class="module-item">
+        <div class="module-num">06</div>
+        <div class="module-info">
+          <h4>Mindset & productivité</h4>
+          <p>Les habitudes mentales des créateurs qui réussissent pour rester consistant sur 365 jours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ POUR QUI ═══════════ -->
+<section class="for-who">
+  <p class="section-label reveal">Pour toi si tu es…</p>
+  <h2 class="section-title reveal">Cette formation est faite <span style="color:var(--yellow)">pour toi</span></h2>
+
+  <div class="who-grid">
+    <div class="who-card reveal">
+      <div class="who-icon">📱</div>
+      <h3>Débutant en création de contenu</h3>
+      <p>Tu veux te lancer et ne sais pas par où commencer. On t'accompagne de A à Z.</p>
+    </div>
+    <div class="who-card reveal">
+      <div class="who-icon">🎥</div>
+      <h3>Créateur sans revenus</h3>
+      <p>Tu crées depuis un moment mais tu n'arrives pas à monétiser. On change ça maintenant.</p>
+    </div>
+    <div class="who-card reveal">
+      <div class="who-icon">💡</div>
+      <h3>Entrepreneur & Freelance</h3>
+      <p>Tu veux utiliser le contenu pour attirer des clients et booster ton business.</p>
+    </div>
+    <div class="who-card reveal">
+      <div class="who-icon">🌟</div>
+      <h3>Tout le monde</h3>
+      <p>Tu as une passion, un savoir ou une histoire à partager. Le monde mérite de te voir.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TÉMOIGNAGES ═══════════ -->
+<section class="testimonials">
+  <p class="section-label reveal">Ils ont osé, ils ont réussi</p>
+  <h2 class="section-title reveal">Des résultats <span style="color:var(--yellow)">réels & concrets</span></h2>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">En 3 mois j'ai passé de 0 à mes premiers revenus grâce au contenu. La méthode est simple, claire et surtout elle fonctionne vraiment !</p>
+      <div class="testi-author">Amani K.</div>
+      <div class="testi-role">Créatrice lifestyle — Kinshasa</div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Avant je postais au hasard. Maintenant j'ai une vraie stratégie, mon audience a explosé et les sponsors arrivent. Merci Cash System 365 !</p>
+      <div class="testi-author">Cédric M.</div>
+      <div class="testi-role">YouTubeur tech — Lubumbashi</div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">J'avais peur d'investir mais c'était la meilleure décision de ma vie. La formation vaut 10x son prix. Mon compte TikTok n'a jamais été aussi actif !</p>
+      <div class="testi-author">Fatou D.</div>
+      <div class="testi-role">Influenceuse beauté — Goma</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GARANTIE ═══════════ -->
+<section class="guarantee">
+  <div class="guarantee-box reveal">
+    <span class="guarantee-icon">🛡️</span>
+    <h2>Satisfait ou remboursé</h2>
+    <p>
+      On est tellement confiant dans la qualité du Cash System 365 que si dans les 7 premiers jours 
+      tu n'es pas satisfait(e), on te rembourse intégralement. Aucune question posée. 
+      Ton succès est notre priorité absolue.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ CTA FINAL ═══════════ -->
+<section class="final-cta">
+  <p class="section-label reveal">Maintenant c'est à toi de jouer</p>
+  <h2 class="section-title reveal" style="max-width:700px;margin-left:auto;margin-right:auto">
+    Ta vie de créateur commence <span style="color:var(--yellow)">aujourd'hui</span>
+  </h2>
+  <p class="section-sub reveal" style="max-width:560px;margin:16px auto 0">
+    Ne laisse pas une autre journée passer sans agir. 
+    Des milliers de personnes attendent ton contenu. 
+    Le seul moment d'agir, c'est maintenant.
+  </p>
+
+  <div class="final-price-block reveal">
+    <span class="old-price">Prix officiel : 30.000 FC</span>
+    <div>
+      <span class="new-price"><span class="currency">FC</span> 10.000</span>
+    </div>
+    <span class="promo-label">🔥 PROMO LIMITÉE — Économise 20.000 FC</span>
+  </div>
+
+  <div class="btn-wrap reveal">
+    <a href="https://sergekalombuskn.mychariow.shop/prd_59etlu/checkout" class="btn-main-big">
+      🚀 Accéder au Cash System 365 maintenant
+    </a>
+    <p style="font-size:13px;color:#8899BB;margin-top:8px">Paiement 100% sécurisé · Accès immédiat · Garantie 7 jours</p>
+    <div class="secure-badges">
+      <span class="secure-badge">🔒 Paiement sécurisé</span>
+      <span class="secure-badge">⚡ Accès instantané</span>
+      <span class="secure-badge">📲 Sur tous tes appareils</span>
+      <span class="secure-badge">✅ Garantie remboursement</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <p>© 2025 Cash System 365 Jours — Tous droits réservés.</p>
+  <p style="margin-top:8px">Les résultats peuvent varier selon les efforts et l'engagement de chaque participant.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Staggered children in grids
+  document.querySelectorAll('.pain-grid, .modules-grid, .who-grid, .testi-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>
+
+</body>
+</html>
